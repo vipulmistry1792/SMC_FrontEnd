@@ -1,0 +1,136 @@
+<div class="header pb-8 pt-5 pt-lg-8 d-flex align-items-center" >
+    <!-- Mask -->
+    <span class="mask bg-gradient-dark opacity-8"></span>
+    <!-- Header container -->
+    <div class="container-fluid d-flex align-items-center">
+      <div class="row">
+        <div class="col-lg-7 col-md-10">
+          <!-- <h1 class="display-2 text-white">Machine Master</h1> -->
+        </div>
+      </div>
+    </div>
+</div>
+  <div class="container-fluid mt--7">
+        <div class="row" *ngIf="SupplyTime">
+        <div class="col-xl-12 mb-5 mb-xl-0">
+            <div class="card  shadow">
+            <div class="card-header bg-transparent">
+            </div>
+            <div class="card-body">
+                <div class="col-md-12 px-1">
+                    <div class="form-group">
+                      <label>Type</label>
+                      <select class="form-control" style="" placeholder="Select Type" [(ngModel)]='typeid' id="typeid" name="typeid" *ngIf="type_data" (change)="getwdsData($event.target.value)">
+                        <option *ngFor="let type of type_data" [value]="type.id">{{type.type}}</option>
+                    </select>
+                      <!-- <input type="number" class="form-control" placeholder="Machineno"  id="machineno" name="machineno" [(ngModel)]="machineno" required> -->
+                    </div>
+                  </div>
+                <div class="col-md-12 px-1">
+                    <div class="form-group">
+                      <label>Location Name</label>
+                      <select class="form-control" placeholder="location" [(ngModel)]='id' id="id" name="id" *ngIf="wds_data">
+                          <option *ngFor="let machine of wds_data" [value]="machine.id">{{machine.name}}</option> 
+                     </select>
+                      <!-- <input type="number" class="form-control" placeholder="Machineno"  id="machineno" name="machineno" [(ngModel)]="machineno" required> -->
+                    </div>
+                  </div>
+                    <div class="col-md-12 px-1">
+                      <div class="form-group">
+                        <label>SupplyTime 1</label>
+                        <input type="text" class="form-control" placeholder="Enetr SupplyTime1"  id="SupplyTime1" name="SupplyTime1" [(ngModel)]='SupplyTime1' required>
+                      </div>
+                    </div>
+                    <div class="col-md-12 px-1">
+                        <div class="form-group">
+                          <label>SupplyTime 2</label>
+                          <input type="text" class="form-control" placeholder="Enetr SupplyTime2"  id="SupplyTime2" name="SupplyTime2" [(ngModel)]='SupplyTime2' required>
+                        </div>
+                      </div>
+                      <div class="col-md-12 px-1">
+                        <div class="form-group">
+                          <label>SupplyTime 3</label>
+                          <input type="text" class="form-control" placeholder="Enetr SupplyTime3"  id="SupplyTime3" name="SupplyTime3" [(ngModel)]='SupplyTime3' required>
+                        </div>
+                      </div>
+                    <div class="col-md-12 px-1">
+                      <div class="form-group">
+                          <!-- <button class="btn btn-success btn-round" (click)="AddData()" *ngIf="id === 0">Submit</button> -->
+                          <button class="btn btn-success btn-round" (click)="UpdateData()" *ngIf="id >= 1">Update</button>
+                      </div>
+                    </div>
+            </div>
+            </div>
+        </div>
+        </div>
+        <div class="row mt-5" *ngIf="BatchData">
+            <div class="col-xl-12 mb-5 mb-xl-0">
+            <div class="card shadow">
+                <div class="card-header border-0">
+                <div class="row align-items-center">
+                    <div class="col">
+                    <h3 class="mb-0 text-center">Supply Time</h3>
+                    </div>
+                    <!-- <div class="col text-right">
+                    <a href="#!" class="btn btn-sm btn-primary"> all</a>
+                    </div> -->
+                </div>
+                </div>
+                <div class="table-responsive">
+                <!-- Projects table -->
+                <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                    <tr>
+                          <th scope="col">
+                             SrNo
+                          </th>
+                          <th>
+                            Name
+                          </th>
+                          <th scope="col">
+                           Supply Time1
+                          </th>
+                          <th scope="col">
+                            Supply Time2
+                          </th>
+                          <th scope="col">
+                            Supply Time3
+                          </th>
+                          <th scope="col" class="text-right">
+                            Action
+                          </th>
+                        <!-- <th scope="col">Page name</th>
+                        <th scope="col">Visitors</th>
+                        <th scope="col">Unique users</th>
+                        <th scope="col">Bounce rate</th> -->
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let batch of BatchData">
+                        <tr >
+                             <th scope="row">
+                                {{batch.id}}
+                              </th>
+                              <td>
+                                {{batch.name}}
+                              </td>
+                              <td>
+                                {{batch.SupplyTime1}}
+                              </td>
+                              <td>
+                                {{batch.SupplyTime2}}
+                              </td>
+                              <td>
+                                {{batch.SupplyTime3}}
+                              </td>
+                              <td>
+                                <button type="button" class="btn btn-info btn-round btn-sm" (click)="Edit($event,batch.id)">Edit</button>
+                              </td>
+                        </tr>
+                      </tbody>
+                </table>
+                </div>
+            </div>
+            </div>
+        </div>
+</div>
+

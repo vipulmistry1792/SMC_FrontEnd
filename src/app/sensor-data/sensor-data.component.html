@@ -1,0 +1,697 @@
+<div class="d-flex justify-content-center">
+    <div class="spinner-border" role="status">
+        <span class="sr-only" id="loading"></span>
+    </div>
+</div>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+  <div class="container-fluid">
+    <div class="header-body">
+      <!-- Card stats -->
+      <div class="row">
+        <div class="col-xl-12 col-lg-12 col-sm-12">
+          <div class="card card-stats mb-4 mb-xl-12 mb-lg-12 mb-sm-12">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-lg-6 col-sm-6">
+                  <div class="form-group">
+                      <div class="input-group input-group-alternative mb-3">
+                        <label for="dateValue" class="form-control">Type : </label>
+                        <select class="form-control" style="" placeholder="Select Type" [(ngModel)]='typeid' id="typeid" name="typeid" >
+                            <option  value="All_WDS_Flow">ALL WDS,BOOSTER_INTAKE WELL & FRENCHWELL FLOW</option>
+                            <option  value="All_WDS_Level">ALL WDS,BOOSTER_INTAKE WELL & FRENCHWELL Level</option>
+                            <option  value="All_WDS_FRC">ALL WDS,BOOSTER_INTAKE WELL & FRENCHWELL FRC</option>
+                            <option  value="All_WDS_Turbidity">ALL WDS,BOOSTER_INTAKE WELL & FRENCHWELL Turbidity</option>
+                            <option  value="All_WDS_PRS">ALL WDS,BOOSTER_INTAKE WELL & FRENCHWELL Pressure</option>
+                            <option  value="All_ESR_FLOW">ALL ESR FLOW</option>
+                            <option  value="All_ESR_LEVEL">ALL ESR LEVEL</option>
+                            <option  value="All_WTP_MLD">ALL WTP MLD</option>
+                            <option  value="All_WDS_MLD">ALL WDS MLD</option>
+                      </select>
+                        <!-- <div class="input-group-prepend">
+                          <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                        </div> -->
+                      </div>
+                    </div>
+                </div>
+                <div class="text-center">
+                  <button type="button" class="btn btn-primary" (click)="showData()">View Data</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div id="loader" *ngIf="loader">
+    <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="loading"></div>
+  </div>
+  <div class="container-fluid mt--7">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-sm-12 mb-5 mb-xl-0">
+        <div class="card shadow">
+          <div class="table-responsive"  *ngIf="WDS_DATA">
+            <div class="card-header bg-transparent" *ngIf="WDS_DATA">
+              <h3 class="mb-0">{{Header}}</h3>
+            </div>         
+            <!-- Projects table -->
+            <table class="table align-items-center table-flush" *ngIf="WDS_DATA">
+              <thead class="bg-info text-white">
+                <tr>
+                  <th scope="col">Sensor Name</th>
+                  <th scope="col">{{col_header}}</th>
+                  <!-- <th scope="col">Unique users</th>
+                  <th scope="col">Bounce rate</th> -->
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of WDS_DATA | keyvalue">
+                <tr class="text-class">
+                  <th class="text-class" scope="row">
+                    {{data.key}}
+                  </th>
+                  <td class="text-class">
+                    {{getwds_value(data.key,data.value )}}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive"  *ngIf="WTP_MLD_DATA">
+            <div class="card-header bg-transparent" *ngIf="WTP_MLD_DATA">
+              <h3 class="mb-0"></h3>
+            </div>         
+            <!-- Projects table -->
+            <table id="datatableexample" class="table align-items-center table-flush" *ngIf="WTP_MLD_DATA">
+              <thead class="bg-info text-white">
+                <tr>
+                  <th scope="col">SrNo</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Today Inlet MLD </th>
+                  <th scope="col">Today Outlet MLD </th>
+                  <th scope="col">Yesterday Inlet MLD </th>
+                  <th scope="col">Yesterday Outlet MLD </th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    1
+                  </th>
+                  <td class="text-class">
+                    Rander (250)
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.Rander_250_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.Rander_250_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.Rander_250_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.Rander_250_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    2
+                  </th>
+                  <td class="text-class">
+                    Kosad (90)
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kosad_90_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kosad_90_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kosad_90_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kosad_90_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    3
+                  </th>
+                  <td class="text-class">
+                    Mota Varachha (32)
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.motavarachha_32_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.motavarachha_32_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.motavarachha_32_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.motavarachha_32_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    3
+                  </th>
+                  <td class="text-class">
+                    Dindoli (78)
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.dindoli_78_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.dindoli_78_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.dindoli_78_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.dindoli_78_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    4
+                  </th>
+                  <td class="text-class">
+                    Dindoli (130)
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.dindoli_130_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.dindoli_130_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.dindoli_130_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.dindoli_130_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    5
+                  </th>
+                  <td class="text-class">
+                    KWW
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kww_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kww_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kww_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kww_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    6
+                  </th>
+                  <td class="text-class">
+                    Simada (90)
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.simada_90_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.simada_90_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.simada_90_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.simada_90_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    7
+                  </th>
+                  <td class="text-class">
+                    KOSAD (212)
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kosad_212_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kosad_212_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kosad_212_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.kosad_212_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    8
+                  </th>
+                  <td class="text-class">
+                   SARTHANA (470)
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.sarthana_470_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.sarthana_470_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.sarthana_470_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.sarthana_470_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    9
+                  </th>
+                  <td class="text-class">
+                   VWW 
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.varachha_water_works_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.varachha_water_works_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.varachha_water_works_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.varachha_water_works_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    10
+                  </th>
+                  <td class="text-class">
+                   VALAK FRENCHWELL 1
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.valak_frenchwell_1_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.valak_frenchwell_1_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.valak_frenchwell_1_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.valak_frenchwell_1_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    11
+                  </th>
+                  <td class="text-class">
+                   VALAK FRENCHWELL 2
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.valak_frenchwell_2_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.valak_frenchwell_2_outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.valak_frenchwell_2_inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.valak_frenchwell_2_outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    12
+                  </th>
+                  <td class="text-class">
+                   TOTAL
+                  </td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.Total_Inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.Total_Outlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.Total_Inlet_yesterday)}}</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.Total_Outlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    13
+                  </th>
+                  <td class="text-class">
+                    TERTIARY
+                  </td>
+                  <td class="text-class">-</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.tertiary_outlet_today)}}</td>
+                  <td class="text-class">-</td>
+                  <td class="text-class">{{getfractional_value(WTP_MLD_DATA.tertiary_outlet_yesterday)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="table-responsive"  *ngIf="WDS_MLD_DATA">
+            <div class="card-header bg-transparent" *ngIf="WDS_MLD_DATA">
+              <h3 class="mb-0"></h3>
+            </div>         
+            <!-- Projects table -->
+            <table id="datatableexample" class="table align-items-center table-flush" *ngIf="WDS_MLD_DATA">
+              <thead class="bg-info text-white">
+                <tr>
+                  <th scope="col">SrNo</th>
+                  <th scope="col">Location</th>
+                  <th scope="col">Today Inlet MLD </th>
+                  <th scope="col">Yesterday Inlet MLD </th>
+                </tr>
+              </thead>
+              <tbody >
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    1
+                  </th>
+                  <td class="text-class">
+                    Abhva Vesu
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Abhva_vesu_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Abhva_vesu_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    2
+                  </th>
+                  <td class="text-class">
+                    Althan
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Althan_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Althan_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    3
+                  </th>
+                  <td class="text-class">
+                    Athwa
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Athawa_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Athawa_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    3
+                  </th>
+                  <td class="text-class">
+                    Bhestan
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Bhestan_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Bhestan_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    4
+                  </th>
+                  <td class="text-class">
+                    Vadod
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Vadod_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Vadod_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    5
+                  </th>
+                  <td class="text-class">
+                    Ashwanikumar
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Ashwanikumar_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Ashwanikumar_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    6
+                  </th>
+                  <td class="text-class">
+                    Bhimrad
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Bhimrad_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Bhimrad_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    7
+                  </th>
+                  <td class="text-class">
+                    Dabholi
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Dabholi_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Dabholi_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    8
+                  </th>
+                  <td class="text-class">
+                   Dindoli
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Dindoli_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Dindoli_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    9
+                  </th>
+                  <td class="text-class">
+                   Dumas
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Dumas_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Dumas_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    10
+                  </th>
+                  <td class="text-class">
+                   Dumbhal
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Dumbhal_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Dumbhal_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    11
+                  </th>
+                  <td class="text-class">
+                   Godadra
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Godadra_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Godadra_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    12
+                  </th>
+                  <td class="text-class">
+                   JoganiNagar
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.JoganiNagar_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.JoganiNagar_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    13
+                  </th>
+                  <td class="text-class">
+                    Katargam GIDC
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Katargam_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Katargam_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    14
+                  </th>
+                  <td class="text-class">
+                    Khatodra
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Khatodra_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Khatodra_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    15
+                  </th>
+                  <td class="text-class">
+                    Kinnary
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Kinnary_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Kinnary_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    16
+                  </th>
+                  <td class="text-class">
+                    Kosad
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Kosad_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Kosad_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    17
+                  </th>
+                  <td class="text-class">
+                    Magob-E3
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Magob_e3_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Magob_e3_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    18
+                  </th>
+                  <td class="text-class">
+                    Mota Varachha
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.MotaVarachha_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.MotaVarachha_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    19
+                  </th>
+                  <td class="text-class">
+                    Pandesara
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Pandesara_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Pandesara_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    20
+                  </th>
+                  <td class="text-class">
+                    Puna
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Puna_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Puna_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    21
+                  </th>
+                  <td class="text-class">
+                    Simada
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Simada_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Simada_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                   22 
+                  </th>
+                  <td class="text-class">
+                    Chikuwadi
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Chikuwadi_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Chikuwadi_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    23
+                  </th>
+                  <td class="text-class">
+                    Udhnasangh
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Udhnasangh_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Udhnasangh_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    24
+                  </th>
+                  <td class="text-class">
+                    Umarwada
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Umarwada_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Umarwada_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    25
+                  </th>
+                  <td class="text-class">
+                    Variav
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Variav_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Variav_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    26
+                  </th>
+                  <td class="text-class">
+                    Smart City WDS1
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Smart_City_WDS1_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Smart_City_WDS1_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    27
+                  </th>
+                  <td class="text-class">
+                    Smart City WDS2
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Smart_City_WDS2_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Smart_City_WDS2_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    28
+                  </th>
+                  <td class="text-class">
+                    Smart City WDS3
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Smart_City_WDS3_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Smart_City_WDS3_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    29
+                  </th>
+                  <td class="text-class">
+                    Pal
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Pal_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Pal_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    30
+                  </th>
+                  <td class="text-class">
+                    Vesu WDS1
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Vesu_WDS1_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Vesu_WDS1_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    31
+                  </th>
+                  <td class="text-class">
+                    Vesu WDS2
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Vesu_WDS2_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Vesu_WDS2_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    32
+                  </th>
+                  <td class="text-class">
+                    Kosad Rajwadi
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Kosad_Rajwadi_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Kosad_Rajwadi_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    33
+                  </th>
+                  <td class="text-class">
+                    Rajshree
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Rajshree_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Rajshree_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    34
+                  </th>
+                  <td class="text-class">
+                    Lal Darwaja
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Laldarwaja_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Laldarwaja_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    35
+                  </th>
+                  <td class="text-class">
+                    Sarthana TP 38
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Sarthana_tp38_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Sarthana_tp38_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    36
+                  </th>
+                  <td class="text-class">
+                    Katargam AREA
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Katargam_area_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Katargam_area_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    37
+                  </th>
+                  <td class="text-class">
+                    Rander Gorat
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Rander_Gorat_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Rander_Gorat_inlet_yesterday)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    38
+                  </th>
+                  <td class="text-class">
+                    Khatodra New
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Khtodra_new_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Khtodra_new_inlet_today)}}</td>
+                </tr>
+                <tr class="text-class" >
+                  <th class="text-class" scope="row">
+                    39
+                  </th>
+                  <td class="text-class">
+                    Total
+                  </td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Total_inlet_today)}}</td>
+                  <td class="text-class">{{getfractional_value(WDS_MLD_DATA.Total_inlet_yesterday)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+  </div>
+  </div>

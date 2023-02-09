@@ -1,0 +1,149 @@
+<!-- spinnner element is 
+    defined with id loading -->
+    <div class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+          <span class="sr-only" id="loading"></span>
+      </div>
+  </div>
+<div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+    <div class="container-fluid">
+      <div class="header-body">
+        <!-- Card stats -->
+        <div class="row">
+          <div class="col-xl-12 col-lg-12 col-sm-12">
+            <div class="card card-stats mb-4 mb-xl-12 mb-lg-12 mb-sm-12">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-lg-6 col-sm-6">
+                    <div class="form-group">
+                        <div class="input-group input-group-alternative mb-3">
+                          <label for="dateValue" class="form-control">Type : </label>
+                          <select class="form-control" style="" placeholder="Select Type" [(ngModel)]='typeid' id="typeid" name="typeid" *ngIf="type_data" (change)="getwdsData($event.target.value)">
+                            <option *ngFor="let type of type_data" [value]="type.id">{{type.type}}</option>
+                        </select>
+                          <!-- <div class="input-group-prepend">
+                            <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                          </div> -->
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-6 col-sm-6">
+                    <div class="form-group">
+                        <div class="input-group input-group-alternative mb-3">
+                          <label for="dateValue" class="form-control">Location : </label>
+                          <select class="form-control" placeholder="Select Type" [(ngModel)]='wdsprefix' id="wdsprefix" name="wdsprefix" *ngIf="wds_data">
+                            <option *ngFor="let wds of wds_data" [value]="wds.tag_prefix">{{wds.name}}</option>
+                        </select>
+                        </div>
+                      </div>
+                  </div>
+                  <div class="text-center">
+                    <button type="button" class="btn btn-primary" (click)="showData()">View Data</button>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="loader" *ngIf="loader">
+  <div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="dot"></div>
+<div class="loading"></div>
+</div>
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-12 col-lg-12 col-sm-12 mb-5 mb-xl-0">
+      <div class="card shadow">
+
+        <div class="table-responsive"  *ngIf="typeid==5">
+          <!-- Projects table -->
+          <div class="card-header bg-transparent" *ngIf="ESR_DATA">
+            <h3 class="mb-0">{{Header}}</h3>
+          </div>
+          <table class="table align-items-center table-flush" *ngIf="ESR_DATA">
+            <thead class="bg-info text-white">
+              <tr>
+                <th scope="col">Sensor Name</th>
+                <th scope="col">Sensor Value</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let data of ESR_DATA | keyvalue">
+              <tr class="text-class">
+                <th class="text-class"    scope="row">
+                  {{data.key}}
+                </th>
+                <td class="text-class">
+                  {{getesr_value(data.key,data.value )}}
+                  <!-- {{data.value  | number : '1.2-2' }}  {{unit(data.key)}} -->
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-responsive"  *ngIf="typeid==4 || typeid==1 || typeid==6 || typeid==3">
+          <div class="card-header bg-transparent" *ngIf="WDS_DATA">
+            <h3 class="mb-0">{{Header}}</h3>
+          </div>
+          <!-- Projects table -->
+          <table class="table align-items-center table-flush" *ngIf="WDS_DATA">
+            <thead class="bg-info text-white">
+              <tr>
+                <th scope="col">Sensor Name</th>
+                <th scope="col">Sensor Value</th>
+                <!-- <th scope="col">Unique users</th>
+                <th scope="col">Bounce rate</th> -->
+              </tr>
+            </thead>
+            <tbody *ngFor="let data of WDS_DATA | keyvalue">
+              <tr class="text-class">
+                <th scope="row" class="text-class">
+                  {{data.key}}
+                </th>
+                <td class="text-class">
+                  {{getwds_value(data.key,data.value )}} 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="table-responsive"  *ngIf="typeid==2">
+          <div class="card-header bg-transparent" *ngIf="WTP_DATA">
+            <h3 class="mb-0">{{Header}}</h3>
+          </div>         
+          <!-- Projects table -->
+          <table class="table align-items-center table-flush" *ngIf="WTP_DATA">
+            <thead class="bg-info text-white">
+              <tr>
+                <th scope="col">Sensor Name</th>
+                <th scope="col">Sensor Value</th>
+                <!-- <th scope="col">Unique users</th>
+                <th scope="col">Bounce rate</th> -->
+              </tr>
+            </thead>
+            <tbody *ngFor="let data of WTP_DATA | keyvalue">
+              <tr class="text-class">
+                <th class="text-class" scope="row">
+                  {{data.key}}
+                </th>
+                <td class="text-class">
+                  {{getwtp_value(data.key,data.value)}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+</div>
+</div>
+
+

@@ -1,0 +1,153 @@
+<!-- spinnner element is 
+    defined with id loading -->
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" role="status">
+            <span class="sr-only" id="loading"></span>
+        </div>
+    </div>
+  <div class="header bg-gradient-danger pb-8 pt-5 pt-md-8">
+      <div class="container-fluid">
+        <div class="header-body">
+          <!-- Card stats -->
+          <div class="row">
+            <div class="col-xl-12 col-lg-12 col-sm-12">
+              <div class="card card-stats mb-4 mb-xl-12 mb-lg-12 mb-sm-12">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-6 col-sm-6">
+                      <div class="form-group">
+                          <div class="input-group input-group-alternative mb-3">
+                            <label for="dateValue" class="form-control">Type : </label>
+                            <select class="form-control" style="" placeholder="Select Type" [(ngModel)]='typeid' id="typeid" name="typeid" *ngIf="type_data" (change)="getwdsData($event.target.value)">
+                              <option *ngFor="let type of type_data" [value]="type.id">{{type.type}}</option>
+                          </select>
+                            <!-- <div class="input-group-prepend">
+                              <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                            </div> -->
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                      <div class="form-group">
+                          <div class="input-group input-group-alternative mb-3">
+                            <label for="dateValue" class="form-control">Location : </label>
+                            <select class="form-control" placeholder="Select Type" [(ngModel)]='wdsprefix' id="wdsprefix" name="wdsprefix" *ngIf="wds_data" (change)="getReportsbyWDS($event.target.value)">
+                              <option *ngFor="let wds of wds_data" [value]="wds.tag_prefix">{{wds.name}}</option>
+                          </select>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="form-group">
+                          <label>Report Name</label>
+                          <input type="text" class="form-control" placeholder="Enetr ReportName"  id="reportname" name="reportname" [(ngModel)]='reportname' required>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6">
+                      <div class="form-group">
+                        <label>Report Table</label>
+                        <input type="text" class="form-control" placeholder="Enetr ReportTable"  id="reporttable" name="reporttable" [(ngModel)]='reporttable' required>
+                      </div>
+                  </div>
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="form-group">
+                          <label>Report Headers</label>
+                          <input type="text" class="form-control" placeholder="Enetr ReportHeaders"  id="reportheader" name="reportheader" [(ngModel)]='reportheader' required>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-sm-12">
+                      <div class="form-group">
+                        <label>Report Query</label>
+                        <input type="text" class="form-control" placeholder="Enetr ReportQuery"  id="reportquery" name="reportquery" [(ngModel)]='reportquery' required>
+                      </div>
+                  </div>
+                  <div class="col-lg-12 col-sm-12">
+                    <div class="form-group">
+                      <label>Report Query1</label>
+                      <input type="text" class="form-control" placeholder="Enetr ReportQuery1"  id="reportquery1" name="reportquery1" [(ngModel)]='reportquery1' required>
+                    </div>
+                </div>
+                    <!-- <div class="text-center">
+                      <button type="button" class="btn btn-primary" (click)="showData()">View Data</button>
+                    </div> -->
+                    <div class="col-md-12 px-1">
+                        <div class="form-group">
+                            <button class="btn btn-success btn-round" (click)="AddData()" *ngIf="id === 0">Submit</button> 
+                            <button class="btn btn-success btn-round" (click)="UpdateData()" *ngIf="id >= 1">Update</button>
+                        </div>
+                      </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="loader" *ngIf="loader">
+    <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="dot"></div>
+  <div class="loading"></div>
+  </div>
+  <div class="container-fluid mt--7">
+    <div class="row">
+      <div class="col-xl-12 col-lg-12 col-sm-12 mb-5 mb-xl-0">
+        <div class="card shadow">
+  
+          <div class="table-responsive" >
+            <!-- Projects table -->
+            <div class="card-header bg-transparent" *ngIf="getAllReports">
+              <h3 class="mb-0"></h3>
+            </div>
+            <table class="table align-items-center table-flush" *ngIf="getAllReports">
+              <thead class="bg-info text-white">
+                <tr>
+                  <th scope="col">ReportNo</th>
+                  <th scope="col">WDS ID</th>
+                  <th scope="col">Report Name</th>
+                  <th scope="col">Report Table</th>
+                  <th scope="col">Report Headers</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody *ngFor="let data of getAllReports">
+                <tr class="text-class">
+                  <th scope="row">
+                    {{data.id}}
+                </th>
+                  <td>
+                    {{data.wds_id}}
+                  </td>
+                  <td>
+                    {{data.ReportName}}
+                  </td>
+                  <td>
+                    {{data.ReportTable}}
+                  </td>
+                  <td>
+                    {{data.ReportHeader}}
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-info btn-round btn-sm" (click)="Edit($event,data.id)">Edit</button>
+                  </td>
+                  
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+
+        </div>
+      </div>
+  </div>
+  </div>
+  
+  
+  
